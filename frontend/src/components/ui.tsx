@@ -8,14 +8,15 @@ import {
 export function rippleEffect(e: MouseEvent<HTMLElement>) {
   const el = e.currentTarget;
   const rect = el.getBoundingClientRect();
-  const size = Math.max(rect.width, rect.height);
+  const size = Math.max(rect.width, rect.height) * 2; // Diameter of ripple circle
   const span = document.createElement('span');
   span.className = 'ripple';
   span.style.width = span.style.height = `${size}px`;
   span.style.left = `${e.clientX - rect.left - size / 2}px`;
   span.style.top = `${e.clientY - rect.top - size / 2}px`;
+  span.style.zIndex = '0';
   el.appendChild(span);
-  setTimeout(() => span.remove(), 600);
+  setTimeout(() => span.remove(), 650);
 }
 
 interface BtnProps extends ButtonHTMLAttributes<HTMLButtonElement> {

@@ -56,7 +56,6 @@
   border-radius: var(--radius-lg);
   border: 1px solid var(--glass-border);
   background: var(--bg-1);
-  box-shadow: var(--shadow-2), 0 0 60px rgba(var(--accent-rgb), 0.14);
   overflow: hidden;
   max-width: 980px;
   margin: 0 auto;
@@ -73,7 +72,7 @@
 .price-card { padding: 30px 26px; display: flex; flex-direction: column; gap: 16px; text-align: center; }
 .price-card .price { font-size: 38px; font-weight: 800; letter-spacing: -1px; }
 .price-card ul { list-style: none; display: flex; flex-direction: column; gap: 10px; color: var(--text-1); font-size: 14px; }
-.price-card.highlight { border-color: rgba(var(--accent-rgb), 0.5); box-shadow: var(--shadow-glow); }
+.price-card.highlight { border-color: rgba(var(--accent-rgb), 0.5); }
 
 .faq-list { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
 

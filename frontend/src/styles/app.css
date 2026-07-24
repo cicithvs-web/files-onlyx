@@ -33,7 +33,6 @@
   display: flex; align-items: center; justify-content: center;
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
   color: #fff;
-  box-shadow: 0 4px 16px rgba(var(--accent-rgb), 0.45);
 }
 .nav-item {
   position: relative;
@@ -356,12 +355,11 @@
   color: #fff;
   border: none;
   cursor: pointer;
-  box-shadow: 0 8px 30px rgba(var(--accent-rgb), 0.5);
   z-index: 35;
   transition: all var(--dur-fast) var(--ease);
   overflow: hidden;
 }
-.fab:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 12px 40px rgba(var(--accent-rgb), 0.6); }
+.fab:hover { transform: translateY(-3px) scale(1.04); }
 .fab:active { transform: scale(0.94); }
 
 /* Accordion */

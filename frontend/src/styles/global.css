@@ -56,7 +56,10 @@
 /* Remove mobile tap highlight overlay */
 html, button, a, .btn, [role="button"], input, select, textarea {
   -webkit-tap-highlight-color: transparent;
-  -webkit-touch-callout: none;
+}
+
+/* Optimize touch action for buttons only */
+button, a, .btn, [role="button"] {
   touch-action: manipulation;
 }
 

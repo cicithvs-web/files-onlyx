@@ -10,6 +10,7 @@ export interface Env {
   JWT_SECRET: string;
   DEFAULT_QUOTA_BYTES: string;
   TRASH_RETENTION_DAYS: string;
+  ACTIVITY_RETENTION_DAYS: string;
   MAX_EDITOR_FILE_BYTES: string;
   MAX_FILE_BYTES: string;
   ZIP_SYNC_THRESHOLD_BYTES: string;

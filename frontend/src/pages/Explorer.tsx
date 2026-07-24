@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type DragEvent, type
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import {
   ChevronRight, FolderPlus, FilePlus, Upload, Download, Pencil, Trash2, Copy,
-  Scissors, Share2, Star, Info, Archive, FileArchive, Boxes, PanelLeft, X, FolderUp,
+  Scissors, Share2, Star, Info, Archive, FileArchive, Boxes, PanelLeft, X, FolderUp, MoreVertical,
 } from 'lucide-react';
 import { api, apiRaw, API_URL, formatBytes, formatDateTime } from '../services/api';
 import { useToast } from '../hooks/useToast';
@@ -640,6 +640,18 @@ export default function Explorer() {
                 <div className="file-meta">
                   <span className="date-col">{formatDateTime(n.updated_at)}</span>
                   <span style={{ minWidth: 64, textAlign: 'right' }}>{n.type === 'file' ? formatBytes(n.size_bytes) : '—'}</span>
+                  <button
+                    className="btn btn-icon"
+                    style={{ width: 32, height: 32, minWidth: 32, marginLeft: 12 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const rect = (e.target as HTMLElement).getBoundingClientRect();
+                      setSelectedId(n.id);
+                      setMenu({ x: rect.right - 140, y: rect.bottom + 4, node: n });
+                    }}
+                  >
+                    <MoreVertical size={16} />
+                  </button>
                 </div>
               </div>
             ))}

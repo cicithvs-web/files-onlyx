@@ -58,4 +58,9 @@ export async function cleanupTrash(env: Env): Promise<void> {
 
   // Expired refresh tokens cleanup
   await env.DB.prepare('DELETE FROM refresh_tokens WHERE expires_at < ?').bind(Date.now()).run();
+
+  // Expired activity logs cleanup (retention: 10 days by default)
+  const activityRetentionDays = parseInt(env.ACTIVITY_RETENTION_DAYS || '10', 10);
+  const activityCutoff = Date.now() - activityRetentionDays * 24 * 3600 * 1000;
+  await env.DB.prepare('DELETE FROM activities WHERE created_at < ?').bind(activityCutoff).run();
 }

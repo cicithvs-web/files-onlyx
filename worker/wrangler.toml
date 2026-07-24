@@ -1,0 +1,43 @@
+name = "files-onlyx-api"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+routes = [
+  { pattern = "api.files.onlyx.top", custom_domain = true }
+]
+
+[vars]
+APP_NAME = "Files Onlyx"
+FRONTEND_ORIGIN = "https://files.onlyx.top"
+COOKIE_DOMAIN = ".onlyx.top"
+ADMIN_USERNAME = "admin"
+DEFAULT_QUOTA_BYTES = "104857600"
+TRASH_RETENTION_DAYS = "30"
+MAX_EDITOR_FILE_BYTES = "1900000"
+MAX_FILE_BYTES = "1900000"
+ZIP_SYNC_THRESHOLD_BYTES = "20971520"
+STORAGE_PROVIDER = "d1"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "files-onlyx-db"
+database_id = "ba21b152-3b56-4ec1-ab14-d2e245a72901"
+
+[[kv_namespaces]]
+binding = "CACHE"
+id = "6b49e036bee34d19911001c300958158"
+
+[[durable_objects.bindings]]
+name = "JOBS"
+class_name = "JobRunner"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["JobRunner"]
+
+[triggers]
+crons = ["0 3 * * *"]
+
+[observability]
+enabled = true

@@ -1,0 +1,9 @@
+name = "files-onlyx"
+type = "javascript"
+account_id = "c248fedff67c8ab4c91e236f74ea7fa6"
+workers_dev = false
+
+[env.production]
+routes = [
+  { pattern = "files.onlyx.top", zone_name = "onlyx.top" }
+]

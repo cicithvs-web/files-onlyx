@@ -1,0 +1,21 @@
+{
+  "name": "files-onlyx-worker",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:migrate": "wrangler d1 execute files-onlyx-db --remote --file=./db/schema.sql",
+    "db:migrate:local": "wrangler d1 execute files-onlyx-db --local --file=./db/schema.sql"
+  },
+  "dependencies": {
+    "fflate": "^0.8.2",
+    "hono": "^4.6.14"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260722.1",
+    "typescript": "^5.7.2",
+    "wrangler": "^4.0.0"
+  }
+}

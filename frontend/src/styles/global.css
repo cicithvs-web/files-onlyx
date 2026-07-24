@@ -53,6 +53,13 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+/* Remove mobile tap highlight overlay */
+html, button, a, .btn, [role="button"], input, select, textarea {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
+}
+
 html, body, #root { height: 100%; }
 
 body {

@@ -18,7 +18,7 @@ app.use('*', async (c, next) => {
   const corsMiddleware = cors({
     origin: (origin) => {
       if (!origin) return c.env.FRONTEND_ORIGIN;
-      const allowed = [c.env.FRONTEND_ORIGIN, 'http://localhost:5173', 'http://127.0.0.1:5173'];
+      const allowed = [c.env.FRONTEND_ORIGIN, 'https://ce6c18de.files-onlyx.pages.dev', 'https://files.onlyx.top', 'http://localhost:5173', 'http://127.0.0.1:5173'];
       return allowed.includes(origin) ? origin : c.env.FRONTEND_ORIGIN;
     },
     credentials: true,

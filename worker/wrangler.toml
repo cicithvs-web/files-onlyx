@@ -9,7 +9,7 @@ routes = [
 
 [vars]
 APP_NAME = "Files Onlyx"
-FRONTEND_ORIGIN = "https://files.onlyx.top"
+FRONTEND_ORIGIN = "https://ce6c18de.files-onlyx.pages.dev"
 COOKIE_DOMAIN = ".onlyx.top"
 ADMIN_USERNAME = "admin"
 DEFAULT_QUOTA_BYTES = "104857600"
@@ -18,6 +18,8 @@ MAX_EDITOR_FILE_BYTES = "1900000"
 MAX_FILE_BYTES = "1900000"
 ZIP_SYNC_THRESHOLD_BYTES = "20971520"
 STORAGE_PROVIDER = "d1"
+JWT_SECRET = "files-onlyx-jwt-secret-key-2026-super-secure"
+ADMIN_PASSWORD = "Admin123456"
 
 [[d1_databases]]
 binding = "DB"

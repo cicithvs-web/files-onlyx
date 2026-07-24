@@ -23,12 +23,12 @@ export async function seedAdmin(env: Env): Promise<void> {
   const username = env.ADMIN_USERNAME || 'admin';
   const existing = await env.DB.prepare('SELECT id FROM users WHERE username = ?').bind(username).first();
   if (existing) return;
-  const password = env.ADMIN_PASSWORD || 'ChangeMe123!';
+  const password = env.ADMIN_PASSWORD || 'Admin123456';
   const hash = await hashPassword(password);
   await env.DB.prepare(
     'INSERT INTO users (id, username, display_name, password_hash, role, status, quota_bytes, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
   )
-    .bind(generateId(), username, 'Super Admin', hash, 'super_admin', 'active', parseInt(env.DEFAULT_QUOTA_BYTES || '1073741824', 10) * 10, now())
+    .bind(generateId(), username, 'Super Admin', hash, 'super_admin', 'active', parseInt(env.DEFAULT_QUOTA_BYTES || '104857600', 10), now())
     .run();
 }
 
@@ -67,12 +67,20 @@ auth.post('/login', async (c) => {
   const remember = !!body.remember;
 
   if (!username || !password) return jsonError(c, 400, 'Username dan password wajib diisi', 'validation');
-  if (!(await checkRateLimit(c, username)))
-    return jsonError(c, 429, 'Terlalu banyak percobaan login. Coba lagi dalam 10 menit.', 'rate_limited');
+  // Rate limit temporarily disabled for debugging
+  // if (!(await checkRateLimit(c, username)))
+  //   return jsonError(c, 429, 'Terlalu banyak percobaan login. Coba lagi dalam 10 menit.', 'rate_limited');
 
   const user = await c.env.DB.prepare('SELECT * FROM users WHERE username = ?').bind(username).first<AuthUser & { password_hash: string }>();
-  if (!user || !(await verifyPassword(password, user.password_hash)))
+  if (!user) {
+    console.log('[login] User not found:', username);
     return jsonError(c, 401, 'Username atau password salah', 'invalid_credentials');
+  }
+  const pwMatch = await verifyPassword(password, user.password_hash);
+  if (!pwMatch) {
+    console.log('[login] Password mismatch for user:', username);
+    return jsonError(c, 401, 'Username atau password salah', 'invalid_credentials');
+  }
   if (user.status !== 'active') return jsonError(c, 403, 'Akun Anda telah dinonaktifkan/ditangguhkan', 'disabled');
 
   await c.env.DB.prepare('UPDATE users SET last_login_at = ? WHERE id = ?').bind(now(), user.id).run();
@@ -116,6 +124,17 @@ auth.post('/logout', async (c) => {
   }
   clearAuthCookies(c);
   return ok(c);
+});
+
+// Public seed endpoint (idempotent) - re-create admin user if needed
+auth.post('/seed', async (c) => {
+  try {
+    await seedAdmin(c.env);
+    return ok(c, { message: 'Admin user seeded successfully' });
+  } catch (err) {
+    console.error('Seed error:', err);
+    return jsonError(c, 500, 'Gagal seed admin user', 'internal');
+  }
 });
 
 auth.get('/me', requireAuth, async (c) => {

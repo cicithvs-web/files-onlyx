@@ -44,7 +44,8 @@ export async function verifyPassword(password: string, stored: string): Promise<
     let diff = 0;
     for (let i = 0; i < computed.length; i++) diff |= computed.charCodeAt(i) ^ hashHex.charCodeAt(i);
     return diff === 0;
-  } catch {
+  } catch (err) {
+    console.error('[verifyPassword] Error:', err);
     return false;
   }
 }
